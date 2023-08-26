@@ -47,7 +47,7 @@ def titleTaste(taste):
     result = query(query_string)
     return result
 
-
+# Da controllare l'usage
 def tasteTitle(title):
     query_string = f"title_taste('{title}', X)"
     results = query(query_string)
@@ -58,14 +58,22 @@ def tasteTitle(title):
 
 
 def titlePrice(price):
-    query_string = f"title_price(X, '{price}')"
-    results = query(query_string)
-    if results:
-        return results[0]["X"]
-    else:
-        return "Unknown"
+    price = int(price)
 
+    interval = np.arange(abs(price - 5), price + 5)
+    price_list = []
 
+    for p in interval:
+        query_string = f"title_price(X, {p})"
+        if query(query_string):
+            price_list.append(p)
+
+    new_price = closest_value(price_list, price)
+    query_string = f"title_price(X,{new_price})"
+
+    return query(query_string)
+
+# Da controllare l'usage
 def priceTitle(title):
     query_string = f"title_price('{title}', X)"
     results = query(query_string)
@@ -76,14 +84,14 @@ def priceTitle(title):
 
 
 def titleFood(food):
+    food =  food.lower()
+
     query_string = f"title_food(X, '{food}')"
-    results = query(query_string)
-    if results:
-        return results[0]["X"]
-    else:
-        return "Unknown"
+    result = query(query_string)
 
+    return result
 
+# Da controllare l'usage
 def foodTitle(title):
     query_string = f"title_food('{title}', X)"
     results = query(query_string)
@@ -93,24 +101,32 @@ def foodTitle(title):
         return "Unknown"
 
 
-def typeTaste(type, taste):
+def titleTypeTaste(type, taste):
     type = type.lower()
     taste = taste.lower()
-    return query("title _ type _ taste(X,\"" + type + "\",\"" + taste + "\").")
+    query_string = f"title_type_taste(X, '{type}', '{taste}')"
+    result = query(query_string)
+    return result
 
-
-def typePrice(type, price):
+def titleTypePrice(type, price):
     type = type.lower()
-    interval = np.arange(1, price + 1)
-    my_list = []
-    for i in interval:
-        i = i.astype(str)
-        if query("title _ type _ price(X,\"" + type + "\",\"" + i + "\")."):
-            my_list.append(query("title _ type _ price(X,\"" + type + "\",\"" + i + "\")."))
-    return my_list
+    price = int(price)
+
+    interval = np.arange(price - 5, price + 5)
+    price_list = []
+
+    for p in interval:
+        query_string = f"title_type_price(X, '{type}', {p})"
+        if query(query_string):
+            price_list.append(p)
+
+    new_price = closest_value(price_list, price)
+    query_string = f"title_type_price(X, '{type}',{new_price})"
+
+    return query(query_string)
 
 
-def typeFood(type, food):
+def titleTypeFood(type, food):
     type = type.lower()
     food = food.lower()
 
@@ -119,7 +135,7 @@ def typeFood(type, food):
     return result
 
 
-def typeTastePrice(type, taste, price):
+def titleTypeTastePrice(type, taste, price):
     type = type.lower()
     taste = taste.lower()
     price = int(price)
@@ -138,7 +154,7 @@ def typeTastePrice(type, taste, price):
     return query(query_string)
 
 
-def typeTasteFood(type, taste, food):
+def titleTypeTasteFood(type, taste, food):
     type = type.lower()
     taste = taste.lower()
     food = food.lower()
@@ -148,7 +164,7 @@ def typeTasteFood(type, taste, food):
     return result
 
 
-def typePriceFood(type, price, food):
+def titleTypePriceFood(type, price, food):
     type = type.lower()
     food = food.lower()
     price = int(price)
@@ -167,7 +183,7 @@ def typePriceFood(type, price, food):
     return query(query_string)
 
 
-def tastePrice(taste, price):
+def titleTastePrice(taste, price):
     taste = taste.lower()
     price = int(price)
 
@@ -185,7 +201,7 @@ def tastePrice(taste, price):
     return query(query_string)
 
 
-def tasteFood(taste, food):
+def titleTasteFood(taste, food):
     taste = taste.lower()
     food = food.lower()
 
@@ -193,7 +209,7 @@ def tasteFood(taste, food):
     return query(query_string)
 
 
-def tastePriceFood(taste, price, food):
+def titleTastePriceFood(taste, price, food):
     taste = taste.lower()
     food = food.lower()
     price = int(price)
@@ -212,7 +228,7 @@ def tastePriceFood(taste, price, food):
     return query(query_string)
 
 
-def priceFood(price, food):
+def titlePriceFood(price, food):
     food = food.lower()
     price = int(price)
 
