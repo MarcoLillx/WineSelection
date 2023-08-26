@@ -166,10 +166,10 @@ def recommendMenu():
 
 def recommender():
     preferences = {
-        "type": input("\n Write a type [red/white/rose/sparkling] or blank for no preference: "),
-        "price": input("\n Write a price or blank for no preference: "),
-        "taste": input("\n Write a taste [dry/sweet/crisp] or blank for no preference: "),
-        "food": input("\n Write a food [red meat/white meat/fish/dessert] or blank for no preference: ")
+        "type": input("\n Write a type [red/white/rose/sparkling] or 'x' for no preference: "),
+        "price": input("\n Write a price or 'x' for no preference: "),
+        "taste": input("\n Write a taste [dry/sweet/crisp] or 'x' for no preference: "),
+        "food": input("\n Write a food [red meat/white meat/fish/dessert] or 'x' for no preference: ")
     }
 
     if all(value != "x" for value in preferences.values()):
@@ -181,7 +181,8 @@ def recommender():
         wine = find_matching_wine(preferences)
         print_matching_wine_x(wine)
 
-
+# if-else statement troppo dispendioso, utilizzare invece un dizionario
+# (oppure scrivere le 4^2 combinazioni concatenandoli con l'operatore and)
 def find_matching_wine(preferences):
     if preferences["type"] == "x":
         if preferences["price"] == "x":
@@ -193,16 +194,21 @@ def find_matching_wine(preferences):
                 wine = qk.titleTaste(preferences["taste"])
             else:
                 # taste-food
-                wine = qk.tasteFood(preferences["taste"], preferences["food"])
+                wine = qk.titleTasteFood(preferences["taste"], preferences["food"])
+        elif preferences["taste"] == "x" and preferences["food"] == "x":
+            # price
+            wine = qk.titlePrice(preferences["price"])
+
         elif preferences["taste"] == "x":
             # price-food
-            wine = qk.priceFood(preferences["price"], preferences["food"])
+            wine = qk.titlePriceFood(preferences["price"], preferences["food"])
+
         elif preferences["food"] == "x":
             # taste-price
-            wine = qk.tastePrice(preferences["taste"], preferences["price"])
+            wine = qk.titleTastePrice(preferences["taste"], preferences["price"])
         else:
             # taste-price-food
-            wine = qk.tastePriceFood(preferences["taste"], preferences["price"], preferences["food"])
+            wine = qk.titleTastePriceFood(preferences["taste"], preferences["price"], preferences["food"])
     else:
         if preferences["price"] == "x":
             if preferences["taste"] == "x":
@@ -211,25 +217,25 @@ def find_matching_wine(preferences):
                     wine = qk.titleType(preferences["type"])
                 else:
                     # type-food
-                    wine = qk.typeFood(preferences["type"], preferences["food"])
+                    wine = qk.titleTypeFood(preferences["type"], preferences["food"])
             else:
                 if preferences["food"] == "x":
                     # type-taste
-                    wine = qk.typeTaste(preferences["type"], preferences["taste"])
+                    wine = qk.titleTypeTaste(preferences["type"], preferences["taste"])
                 else:
                     # type-taste-food
-                    wine = qk.typeTasteFood(preferences["type"], preferences["taste"], preferences["food"])
+                    wine = qk.titleTypeTasteFood(preferences["type"], preferences["taste"], preferences["food"])
         elif preferences["taste"] == "x":
             if preferences["food"] == "x":
                 # type-price
-                wine = qk.typePrice(preferences["type"], preferences["price"])
+                wine = qk.titleTypePrice(preferences["type"], preferences["price"])
             else:
                 # type-price-food
-                wine = qk.typePriceFood(preferences["type"], preferences["price"], preferences["food"])
+                wine = qk.titleTypePriceFood(preferences["type"], preferences["price"], preferences["food"])
         else:
             if preferences["food"] == "x":
                 # type-taste-price
-                wine = qk.typeTastePrice(preferences["type"], preferences["taste"], preferences["price"])
+                wine = qk.titleTypeTastePrice(preferences["type"], preferences["taste"], preferences["price"])
             else:
                 wine = None
                 print("Error while calculating your preferences.")
@@ -252,7 +258,7 @@ def print_matching_wine(wine):
             if w["Title"].lower() == wine_match.lower():
                 print("\nTitle:", wine_match)
                 print("Type:", w["Type"])
-                print("Price:", w["Price"])
+                print("Price:", w["Price"], "€")
                 print("Taste:", w["Taste"])
                 print("Food:", w["Food"])
                 wine_found = True
@@ -271,13 +277,13 @@ def print_matching_wine_x(wine):
         wine_list.append(w["X"])
 
     if wine_list:
-        print("\nI found this wines for you!")
+        print("\nI found this wine for you!")
         r = random.randint(0, len(wine_list) - 1)
         for w in wines:
             if w["Title"].lower() == wine_list[r].lower():
                 print("\nTitle:", wine_list[r])
                 print("Type:", w["Type"])
-                print("Price:", w["Price"])
+                print("Price:", w["Price"], "€")
                 print("Taste:", w["Taste"])
                 print("Food:", w["Food"])
                 wine_found = True
