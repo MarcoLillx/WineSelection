@@ -16,11 +16,11 @@ def menu():
             wineSectionMenu()
 
         elif user_input == 2:
-            # Wine recommender
+            # wine recommender
             recommendMenu()
 
         elif user_input == 3:
-            # Predict the quality of a wine
+            # predict the quality of a wine
             qm.menu()
 
         elif user_input == 4:
@@ -42,11 +42,11 @@ def wineSectionMenu():
         user_input = int(input("\nEnter a number: "))
 
         if user_input == 1:
-            # print 5 random wine or all
+            # print a random wine or all
             printWineMenu()
 
         elif user_input == 2:
-            # find a wine by name
+            # find a wine by name or id
             findWine()
 
         elif user_input == 3:
@@ -70,13 +70,13 @@ def printWineMenu():
         if user_input == 1:
             # all wines
             for wine in wines:
-                print(wine["Title"])
+                print(">" + wine["Title"])
 
         elif user_input == 2:
-            # 1 random Wine
+            # 1 random wine
             r = random.randint(0, 29)
 
-            print(f"\nWine name: {wines[r]['Title']}")
+            print(f"\n>{wines[r]['Title']}")
 
         elif user_input == 3:
             # exit
@@ -105,16 +105,7 @@ def findWine():
                 if wine["Title"].lower() == input_name:
                     found_wine = wine
 
-            if found_wine:
-                print("Wine found!")
-                print("Title:", found_wine["Title"])
-                print("Type:", found_wine["Type"])
-                print("Region:", found_wine["Region"])
-                print("Price:", found_wine["Price"])
-                print("Taste:", found_wine["Taste"])
-                print("Food:", found_wine["Food"])
-            else:
-                print("\nWine not found.")
+            print_wine_found(found_wine)
 
         elif user_input == 2:
             # by id
@@ -126,21 +117,25 @@ def findWine():
                 if wine["Id"] == input_id:
                     found_wine = wine
 
-            if found_wine:
-                print("Wine found!")
-                print("Title:", found_wine["Title"])
-                print("Type:", found_wine["Type"])
-                print("Region:", found_wine["Region"])
-                print("Price:", found_wine["Price"])
-                print("Taste:", found_wine["Taste"])
-                print("Food:", found_wine["Food"])
-            else:
-                print("\nWine not found.")
+            print_wine_found(found_wine)
 
         elif user_input == 3:
             break
         else:
             print("\n [!] I don't know this command!")
+
+
+def print_wine_found(wine):
+    if wine:
+        print("\nWine found!")
+        print("Title:", wine["Title"])
+        print("Type:", wine["Type"])
+        print("Region:", wine["Region"])
+        print("Price:", wine["Price"], "€")
+        print("Taste:", wine["Taste"])
+        print("Food:", wine["Food"])
+    else:
+        print("\nWine not found.")
 
 
 def recommendMenu():
@@ -150,7 +145,7 @@ def recommendMenu():
         user_input = int(input("\nEnter a number: "))
 
         if user_input == 1:
-            # logic classifier
+            # recommend system
             recommender()
 
         elif user_input == 2:
@@ -165,11 +160,12 @@ def recommendMenu():
 
 
 def recommender():
+    # dictionary for user preferences
     preferences = {
-        "type": input("\n Write a type [red/white/rose/sparkling] or 'x' for no preference: "),
-        "price": input("\n Write a price or 'x' for no preference: "),
-        "taste": input("\n Write a taste [dry/sweet/crisp] or 'x' for no preference: "),
-        "food": input("\n Write a food [red meat/white meat/fish/dessert] or 'x' for no preference: ")
+        "type": input("\n Enter a type [red/white/rose/sparkling] or 'x' for no preference: "),
+        "price": input("\n Enter a price or 'x' for no preference: "),
+        "taste": input("\n Enter a taste [dry/sweet/crisp] or 'x' for no preference: "),
+        "food": input("\n Enter a food [red meat/white meat/fish/dessert] or 'x' for no preference: ")
     }
 
     if all(value != "x" for value in preferences.values()):
@@ -179,7 +175,8 @@ def recommender():
         print("You have no preferences, all wines are good for you!")
     else:
         wine = find_matching_wine(preferences)
-        print_matching_wine_x(wine)
+        print_matching_wine(wine)
+
 
 # if-else statement troppo dispendioso, utilizzare invece un dizionario
 # (oppure scrivere le 4^2 combinazioni concatenandoli con l'operatore and)
@@ -244,30 +241,6 @@ def find_matching_wine(preferences):
 
 
 def print_matching_wine(wine):
-    wines = qk.getWines()
-
-    wine_match = ""
-    wine_found = False
-
-    for w in wine:
-        wine_match = w["X"]
-
-    if wine_match != "":
-        print("\nI found this wine for you!")
-        for w in wines:
-            if w["Title"].lower() == wine_match.lower():
-                print("\nTitle:", wine_match)
-                print("Type:", w["Type"])
-                print("Price:", w["Price"], "€")
-                print("Taste:", w["Taste"])
-                print("Food:", w["Food"])
-                wine_found = True
-
-    if not wine_found:
-        print("No wine matches your preferences.")
-
-
-def print_matching_wine_x(wine):
     wines = qk.getWines()
 
     wine_list = []

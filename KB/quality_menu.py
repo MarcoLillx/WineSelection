@@ -19,7 +19,6 @@ def menu():
 
         elif user_input == '2':
             addMenu()
-            print("work in progress..")
 
         elif user_input == '3':
             classificationMenu()
@@ -78,12 +77,10 @@ def classifyInput(quality):
 def classificationMenu():
 
     user_inputs = classInput()
-    print("User_inputs: ", user_inputs)
 
     fixAcid, volAcid, citAcid, rSugar, chlorides, freeSulf, totSulf, sulphates, alcohol = pl.classifyValues(user_inputs)
 
     example = "[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid + ", rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = " + freeSulf + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates + ", alcohol_class = " + alcohol + ", color_class = " + user_inputs["color"] + "]"
-    print("Example: ", example)
     pl.classifyExample(example)
 
 
