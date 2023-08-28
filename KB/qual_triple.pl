@@ -4,10 +4,9 @@
 :- op(300,xfx, <==).
 
 % Facts
-% Raggruppati in base alla propriet�
 % usando la rappresentazione individuo-propriet�-valore
 
-% winename
+% wineid
 prop(wine_1, wineid, 0).
 prop(wine_2, wineid, 1).
 prop(wine_3, wineid, 2).
@@ -618,6 +617,10 @@ prop(A, a_class, medium) :-
 prop(A, a_class, high) :-
     A >= 11.
 
+% CLASSI
+% le classi saranno definite come una lista di possibili Liste di coppie attributo-valore
+% cioè avrà la seguente forma: classe<==[cong1 or cong2 or ... or congn] (Forma Normale Disgiuntiva)
+% congn è una congiunzione di coppie att=val
 
 % Features attributo(nome, valore)
 
@@ -642,47 +645,68 @@ attributo(color_class, [red, white]).
 %color_class = white]).
 
 
-classifica(Oggetto, Classe) :-
-    Classe <== Descrizione,
+% riconosce la classe di appartenenza
+
+classifica(Oggetto, Classe) :- %Oggetto è una sequenza di lista di coppie(attributo,valore)
+    Classe <== Descrizione,  % Prende dalla classe una lista di Liste(una congiunzione)
     member(CongAttributi, Descrizione),
     soddisfa(Oggetto, CongAttributi).
 
+% Verifica se nella lista passata in Congiunzione c è una coppia att=valx e se
+% c è nella lista passata in Oggetto una coppia att=valy. Se vengono verificate
+% queste tre condizioni, allora esegue un not
 soddisfa(Oggetto, Congiunzione) :-
     \+ (member(Att = Valx, Congiunzione),
         member(Att = Valy, Oggetto),
         Valx \== Valy).
 
+% apprendi(Classe): raccoglie il training set in una lista, costruisce e manda
+% in output una descrizione per la Classe e asserisce la corrispondente Regola
+
 apprendi(Classe) :-
-    bagof(esempio(C,O), esempio(C,O), Esempi),
-    apprendi(Esempi, Classe, Descrizione),
-    assert(Classe<==Descrizione).
+    bagof(esempio(C,O), esempio(C,O), Esempi),  % raccoglie gli esempi
+    apprendi(Esempi, Classe, Descrizione),  % induce la regola
+    assert(Classe<==Descrizione).   % apprende la regola
+
+% apprendi(Esempi,Classe,Descrizione): Descrizione copre esattamente gli esempi
+% di classe nella lista Esempi
 
 apprendi(Esempi, Classe, []) :-
-    \+ member(esempio(Classe, _), Esempi).
+    \+ member(esempio(Classe, _), Esempi).  % non ci sono esempi da coprire
 
-apprendi(Esempi, Classe, [Conge|Congi]) :-
-    apprendi_cong(Esempi, Classe, Conge),
-    rimuovi(Esempi, Conge, RestoEsempi),
-    apprendi(RestoEsempi, Classe, Congi).
+% Conge è una lista di coppie att=val che copre almeno un esempio positivo e nessun
+% esempio negativo
+% Congi si ottiene rimuovendo da Esempi quelli coperti da Conge coprendo i rimanenti oggetti
+% di Classe in Esempi
+
+% Costruisce la descrizione determinando una congiunzione
+
+apprendi(Esempi, Classe, [Conge|Congi]) :-apprendi_cong(Esempi, Classe, Conge),
+    rimuovi(Esempi, Conge, RestoEsempi),   % rimuove gli esempi che la soddisfano
+    apprendi(RestoEsempi, Classe, Congi).  % copre gli esempi rimasti
+
+% apprendi_cong(Esempi,Classe,Cong)
+% Cong è la lista di valori di attributi soddisfatti da almeno un esempio
+% di Classe e da nessun esempio di un altra classe
 
 apprendi_cong(Esempi, Classe, []) :-
-    \+ (member(esempio(ClasseX, _), Esempi),
-        ClasseX \== Classe),!.
+    \+ (member(esempio(ClasseX, _), Esempi),    % non ci sono esempi
+        ClasseX \== Classe),!.                  % di altre classi
 
 apprendi_cong(Esempi, Classe, [Cond|Conds]) :-
-    scegli_cond(Esempi, Classe, Cond),
-    filtra(Esempi, [Cond], Esempi1),
+    scegli_cond(Esempi, Classe, Cond),          % sceglie attributo=valore
+    filtra(Esempi, [Cond], Esempi1),            % Esempi1 soddisfano Cond
     apprendi_cong(Esempi1, Classe, Conds).
 
 scegli_cond(Esempi, Classe, AttVal) :-
     findall(AV/Punti, punti(Esempi, Classe, AV, Punti), AVs),
-    best(AVs, AttVal).
+    best(AVs, AttVal).                  % coppia attributo=valore con il miglior punteggio
 
-best([AttVal/_],AttVal).
+best([AttVal/_],AttVal).                % se c è una sola coppia è la migliore
 best([AV0/S0,AV1/S1|AVSlist],AttVal) :-
-    S1 > S0, !,
-    best([AV1/S1|AVSlist], AttVal);
-    best([AV0/S0|AVSlist], AttVal).
+    S1 > S0, !,                         % se AV1 è meglio di AV0
+    best([AV1/S1|AVSlist], AttVal);     % prendo AV1
+    best([AV0/S0|AVSlist], AttVal).     % altrimenti AV0
 
 filtra(Esempi, Cond, Esempi1) :-
     findall(esempio(Classe,Ogg),
@@ -691,18 +715,20 @@ filtra(Esempi, Cond, Esempi1) :-
 
 rimuovi([],_,[]).
 rimuovi([esempio(_,Ogg)|Es], Conge, Es1) :-
-    soddisfa(Ogg, Conge), !,
-    rimuovi(Es, Conge, Es1).
+    soddisfa(Ogg, Conge), !,            % il primo esempio matcha Conge
+    rimuovi(Es, Conge, Es1).            % lo rimuove
+
+% mantiene il primo esempio
 rimuovi([E|Es], Conge, [E|Es1]) :-
     rimuovi(Es, Conge, Es1).
 
 
-punti(Esempi, Classe, AttVal, Punti) :-
-    candidato(Esempi, Classe, AttVal),
+punti(Esempi, Classe, AttVal, Punti) :- % cerca un attributo/valore adatto nella coppia
+    candidato(Esempi, Classe, AttVal),  % Esempi1 soddisfa la condizione Att=Val
     filtra(Esempi, [AttVal], Esempi1),
     length(Esempi1, N1),
-    conta_pos(Esempi1, Classe, Npos1),
-    Npos1 > 0,
+    conta_pos(Esempi1, Classe, Npos1),  % numero di esempi positivi
+    Npos1 > 0,                          % almeno un esempio positivo
     Punti is (Npos1 + 1) / (N1 + 2).
 
 candidato(Esempi,Classe,Att = Val) :-
@@ -712,10 +738,12 @@ candidato(Esempi,Classe,Att = Val) :-
 
 
 adatto(AttVal, Esempi, Classe) :-
-    member(esempio(ClasseX, OggX), Esempi),
-    ClasseX \== Classe,
-    \+ soddisfa(OggX, [AttVal]),!.
+    member(esempio(ClasseX, OggX), Esempi), % almeno un esempio negativo deve non matchare con AttVal
+    ClasseX \== Classe,                     % esempio negativo
+    \+ soddisfa(OggX, [AttVal]),!.          % che non matcha
 
+% conta_pos(Esempi,Classe,N)
+% N è il numero degli esempi positivi di Classe
 conta_pos([],_,0).
 conta_pos([esempio(ClasseX,_)|Esempi],Classe,N) :-
     conta_pos(Esempi, Classe, N1),

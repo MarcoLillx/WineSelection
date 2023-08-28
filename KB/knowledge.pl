@@ -34,6 +34,8 @@ wine(30, 'Aimu Gewrztraminer 2020', white, 'Piedmont', 17, dry, 'white meat').
 id(_).
 title(_).
 id_title(Id, Title) :- wine(Id, Title, _, _, _, _, _).
+
+% Regole per la ricerca di un vino tramite inserimento di parametri
 title_price(Title, Price) :- wine(_, Title, _, _, Price, _, _).
 title_taste(Title, Taste) :- wine(_, Title, _, _, _, Taste, _).
 title_type(Title, Type) :- wine(_, Title, Type, _, _, _, _).
@@ -41,11 +43,21 @@ title_food(Title, Food) :- wine(_, Title, _, _, _, _, Food).
 title_type_price(Title, Type, Price) :- wine(_, Title, Type, _, Price, _, _).
 title_type_taste(Title, Type, Taste) :- wine(_, Title, Type, _, _, Taste, _).
 title_type_food(Title, Type, Food) :- wine(_, Title, Type, _, _, _, Food).
-title_taste_price(Title, Taste, Price) :- wine(_, Title, _, _, Price, Taste, _).
+title_price_taste(Title, Price, Taste) :- wine(_, Title, _, _, Price, Taste, _).
 title_taste_food(Title, Taste, Food) :- wine(_, Title, _, _, _, Taste, Food).
 title_price_food(Title, Price, Food) :- wine(_, Title, _, _, Price, _, Food).
-title_type_taste_price(Title, Type, Taste, Price) :- wine(_, Title, Type, _, Price, Taste, _).
+title_type_price_taste(Title, Type, Price, Taste) :- wine(_, Title, Type, _, Price, Taste, _).
 title_type_taste_food(Title, Type, Taste, Food) :- wine(_, Title, Type, _, _, Taste, Food).
 title_type_price_food(Title, Type, Price, Food) :- wine(_, Title, Type, _, Price, _, Food).
-title_taste_price_food(Title, Taste, Price, Food) :- wine(_, Title, _, _, Price, Taste, Food).
+title_price_taste_food(Title, Price, Taste, Food) :- wine(_, Title, _, _, Price, Taste, Food).
 title_type_price_taste_food(Title, Type, Price, Taste, Food) :- wine(_, Title, Type, _, Price, Taste, Food).
+
+% Regole per ottenere il prezzo di un vino
+type_price_taste_food(Type, Price, Taste, Food) :- wine(_,_, Type,_, Price, Taste, Food).
+type_price_food(Type, Price, Food) :- wine(_,_, Type,_, Price, _, Food).
+type_price_taste(Type, Price, Taste) :- wine(_,_, Type,_, Price, Taste, _).
+price_taste_food(Price, Taste, Food) :- wine(_,_, _,_, Price, Taste, Food).
+type_price(Type, Price) :- wine(_,_, Type,_, Price, _, _).
+price_taste(Price, Taste) :- wine(_,_, _,_, Price, Taste, _).
+price_food(Price, Food) :- wine(_,_, _,_, Price, _, Food).
+price(Price) :- wine(_,_, _,_, Price, _, _).
