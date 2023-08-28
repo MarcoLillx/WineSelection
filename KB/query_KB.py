@@ -1,4 +1,3 @@
-import numpy as np
 from pyswip import Prolog
 
 prolog = Prolog()

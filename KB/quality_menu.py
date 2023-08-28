@@ -40,8 +40,10 @@ def addMenu():
 
     wine = input("\nEnter the name of the wine to add to the Knowledge Base [without spaces]:\n> ").lower()
 
-    fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color = inputExample()
-    valueList.extend([wine, fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color, ""])
+    (fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide,
+     sulphates, alcohol, color) = inputExample()
+    valueList.extend([wine, fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
+                      free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color, ""])
 
     featureDict = pl.createDict(valueList)
 
@@ -53,7 +55,10 @@ def addMenu():
 
     elif response == "n":
         fixAcid, volAcid, citAcid, rSugar, chlorides, freeSulf, totSulf, sulphates, alcohol = pl.classifyValues(featureDict)
-        example = "[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid + ",  rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = " + freeSulf + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates + ", alcohol_class = " + alcohol + ", color_class = " + color + "]"
+        example = ("[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid
+                   + ",  rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = "
+                   + freeSulf + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates
+                   + ", alcohol_class = " + alcohol + ", color_class = " + color + "]")
         quality = pl.classifyExample(example)
     else:
         print("Wrong command!")
@@ -80,14 +85,18 @@ def classificationMenu():
 
     fixAcid, volAcid, citAcid, rSugar, chlorides, freeSulf, totSulf, sulphates, alcohol = pl.classifyValues(user_inputs)
 
-    example = "[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid + ", rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = " + freeSulf + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates + ", alcohol_class = " + alcohol + ", color_class = " + user_inputs["color"] + "]"
+    example = ("[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid
+               + ", rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = " + freeSulf
+               + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates + ", alcohol_class = " + alcohol
+               + ", color_class = " + user_inputs["color"] + "]")
     pl.classifyExample(example)
 
 
 def classInput():
     values = []
 
-    fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color = inputExample()
+    (fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide,
+     sulphates, alcohol, color) = inputExample()
 
     values.extend(
         ["", fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
@@ -98,15 +107,16 @@ def classInput():
 
 
 def inputExample():
-    fixed_acidity = input("\nEnter fixed acidity: ", )
-    volatile_acidity = input("Enter volatile acidity: ", )
-    citric_acid = input("Enter citric acid: ", )
-    residual_sugar = input("Enter residual sugar: ", )
-    chlorides = input("Enter chlorides: ", )
-    fs_dioxide = input("Enter free sulfur dioxide: ", )
-    ts_dioxide = input("Enter total sulfur dioxide: ", )
-    sulphates = input("Enter sulphates: ", )
-    alcohol = input("Enter alcohol: ", )
-    color = input("Enter color: ")
+    fixed_acidity = input("\nEnter fixed acidity: [> 0] ", )
+    volatile_acidity = input("Enter volatile acidity: [> 0]", )
+    citric_acid = input("Enter citric acid: [>= 0]", )
+    residual_sugar = input("Enter residual sugar: [> 0]", )
+    chlorides = input("Enter chlorides: [> 0]", )
+    fs_dioxide = input("Enter free sulfur dioxide: [> 0]", )
+    ts_dioxide = input("Enter total sulfur dioxide: [> 0]", )
+    sulphates = input("Enter sulphates: [> 0]", )
+    alcohol = input("Enter alcohol: [> 0]", )
+    color = input("Enter color: [red/white]")
 
-    return fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, fs_dioxide, ts_dioxide, sulphates, alcohol, color
+    return (fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, fs_dioxide, ts_dioxide, sulphates,
+            alcohol, color)

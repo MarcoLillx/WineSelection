@@ -282,7 +282,7 @@ def wineSectionTextMenu():
 
 
 def recommendTextMenu():
-    print("\n # --- Wine recommendation --- #\n"
+    print("\n # --- Wine recommender --- #\n"
           + "\n 1 -- Wine Catalogue"
           + "\n 2 -- Recommend me"
           + "\n 3 -- Information/help"
@@ -290,7 +290,7 @@ def recommendTextMenu():
 
 
 def recommendHelp():
-    print("\n # ------ Reccommendation manual ------ #"
+    print("\n # ------ Reccommender manual ------ #"
           + "\n\n [Type]"
           + "\n The wine's color."
           + "\n It depends on which type of grape is used to make the wine."
@@ -308,4 +308,4 @@ def userManual():
           + "\n     In this section you'll be able to find the wine that better fits you're requests!"
           + "\n\n [Quality prediction]"
           + "\n     In this section you can predict what's the quality of a wine"
-          + "\n     The calculation is performed based on a dataset of more than 6000 wines!")
+          + "\n     The calculation is performed based on a dataset of 40 wines!")
