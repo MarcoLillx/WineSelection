@@ -30,16 +30,6 @@ def titleType(type):
     return result
 
 
-# Da controllare l'usage
-def typeTitle(title):
-    query_string = f"title_type('{title}', X)"
-    results = query(query_string)
-    if results:
-        return results[0]["X"]
-    else:
-        return "Unknown"
-
-
 def titleTaste(taste):
     taste = taste.lower()
 
@@ -47,58 +37,29 @@ def titleTaste(taste):
     result = query(query_string)
     return result
 
-# Da controllare l'usage
-def tasteTitle(title):
-    query_string = f"title_taste('{title}', X)"
-    results = query(query_string)
-    if results:
-        return results[0]["X"]
-    else:
-        return "Unknown"
-
 
 def titlePrice(price):
     price = int(price)
 
-    interval = np.arange(abs(price - 5), price + 5)
     price_list = []
 
-    for p in interval:
-        query_string = f"title_price(X, {p})"
-        if query(query_string):
-            price_list.append(p)
+    matching_prices = query(f"price( X )")
+    for elem in matching_prices:
+        price_list.append(elem["X"])  # Insert in a list all the prices
 
-    new_price = closest_value(price_list, price)
+    new_price = closest_value(price_list, price)  # Takes the nearest price in the list
     query_string = f"title_price(X,{new_price})"
 
     return query(query_string)
 
-# Da controllare l'usage
-def priceTitle(title):
-    query_string = f"title_price('{title}', X)"
-    results = query(query_string)
-    if results:
-        return results[0]["X"]
-    else:
-        return "Unknown"
-
 
 def titleFood(food):
-    food =  food.lower()
+    food = food.lower()
 
     query_string = f"title_food(X, '{food}')"
     result = query(query_string)
 
     return result
-
-# Da controllare l'usage
-def foodTitle(title):
-    query_string = f"title_food('{title}', X)"
-    results = query(query_string)
-    if results:
-        return results[0]["X"]
-    else:
-        return "Unknown"
 
 
 def titleTypeTaste(type, taste):
@@ -108,19 +69,18 @@ def titleTypeTaste(type, taste):
     result = query(query_string)
     return result
 
+
 def titleTypePrice(type, price):
     type = type.lower()
     price = int(price)
 
-    interval = np.arange(price - 5, price + 5)
     price_list = []
 
-    for p in interval:
-        query_string = f"title_type_price(X, '{type}', {p})"
-        if query(query_string):
-            price_list.append(p)
+    matching_prices = query(f"type_price('{type}', X)")
+    for elem in matching_prices:
+        price_list.append(elem["X"])  # Insert in a list all the prices
 
-    new_price = closest_value(price_list, price)
+    new_price = closest_value(price_list, price)  # Takes the nearest price in the list
     query_string = f"title_type_price(X, '{type}',{new_price})"
 
     return query(query_string)
@@ -135,21 +95,19 @@ def titleTypeFood(type, food):
     return result
 
 
-def titleTypeTastePrice(type, taste, price):
+def titleTypePriceTaste(type, price, taste):
     type = type.lower()
     taste = taste.lower()
     price = int(price)
 
-    interval = np.arange(price - 5, price + 5)
     price_list = []
 
-    for p in interval:
-        query_string = f"title_type_taste_price(X, '{type}', '{taste}', {p})"
-        if query(query_string):
-            price_list.append(p)
+    matching_prices = query(f"type_price_taste('{type}', X, '{taste}')")
+    for elem in matching_prices:
+        price_list.append(elem["X"])  # Insert in a list all the prices
 
-    new_price = closest_value(price_list, price)
-    query_string = f"title_type_taste_price(X, '{type}', '{taste}', {new_price})"
+    new_price = closest_value(price_list, price)  # Takes the nearest price in the list
+    query_string = f"title_type_price_taste(X, '{type}', {new_price}, '{taste}',)"
 
     return query(query_string)
 
@@ -169,34 +127,30 @@ def titleTypePriceFood(type, price, food):
     food = food.lower()
     price = int(price)
 
-    interval = np.arange(price - 5, price + 5)
     price_list = []
 
-    for p in interval:
-        query_string = f"title_type_price_food(X, '{type}', {p}, '{food}')"
-        if query(query_string):
-            price_list.append(p)
+    matching_prices = query(f"type_price_food('{type}', X, '{food}')")
+    for elem in matching_prices:
+        price_list.append(elem["X"])  # Insert in a list all the prices
 
-    new_price = closest_value(price_list, price)
+    new_price = closest_value(price_list, price)  # Takes the nearest price in the list
     query_string = f"title_type_price_food(X, '{type}',{new_price}, '{food}')"
 
     return query(query_string)
 
 
-def titleTastePrice(taste, price):
+def titlePriceTaste(price, taste):
     taste = taste.lower()
     price = int(price)
 
-    interval = np.arange(price - 5, price + 5)
     price_list = []
 
-    for p in interval:
-        query_string = f"title_taste_price(X, '{taste}', {p})"
-        if query(query_string):
-            price_list.append(p)
+    matching_prices = query(f"price_taste( X, '{taste}')")
+    for elem in matching_prices:
+        price_list.append(elem["X"])  # Insert in a list all the prices
 
-    new_price = closest_value(price_list, price)
-    query_string = f"title_taste_price(X, '{taste}',{new_price})"
+    new_price = closest_value(price_list, price)  # Takes the nearest price in the list
+    query_string = f"title_price_taste(X, {new_price}, '{taste}')"
 
     return query(query_string)
 
@@ -209,21 +163,19 @@ def titleTasteFood(taste, food):
     return query(query_string)
 
 
-def titleTastePriceFood(taste, price, food):
+def titlePriceTasteFood(price, taste, food):
     taste = taste.lower()
     food = food.lower()
     price = int(price)
 
-    interval = np.arange(price - 5, price + 5)
     price_list = []
 
-    for p in interval:
-        query_string = f"title_taste_price_food(X, '{taste}', {p}, '{food}')"
-        if query(query_string):
-            price_list.append(p)
+    matching_prices = query(f"price_taste_food( X, '{taste}', '{food}')")
+    for elem in matching_prices:
+        price_list.append(elem["X"])  # Insert in a list all the prices
 
-    new_price = closest_value(price_list, price)
-    query_string = f"title_taste_price_food(X, '{taste}',{new_price}, '{food}')"
+    new_price = closest_value(price_list, price)  # Takes the nearest price in the list
+    query_string = f"title_price_taste_food(X, {new_price}, '{taste}', '{food}')"
 
     return query(query_string)
 
@@ -232,44 +184,40 @@ def titlePriceFood(price, food):
     food = food.lower()
     price = int(price)
 
-    interval = np.arange(price - 5, price + 5)
     price_list = []
 
-    for p in interval:
-        query_string = f"title_price_food(X, {p}, '{food}')"
-        if query(query_string):
-            price_list.append(p)
+    matching_prices = query(f"price_food(X, '{food}')")
+    for elem in matching_prices:
+        price_list.append(elem["X"])  # Insert in a list all the prices
 
-    new_price = closest_value(price_list, price)
+    new_price = closest_value(price_list, price)  # Takes the nearest price in the list
     query_string = f"title_price_food(X, {new_price}, '{food}')"
 
     return query(query_string)
 
 
-def allSearch(type_input, price_input, taste_input, food_input):
-    type_input = type_input.lower()
-    price_input = int(price_input)
-    taste_input = taste_input.lower()
-    food_input = food_input.lower()
+def allSearch(type, price, taste, food):
+    type = type.lower()
+    price = int(price)
+    taste = taste.lower()
+    food = food.lower()
 
-    interval = np.arange(price_input - 5, price_input + 5)
     price_list = []
 
-    for p in interval:
-        query_string = f"title_type_price_taste_food(X, '{type_input}', {p}, '{taste_input}', '{food_input}')"
-        if query(query_string):
-            price_list.append(p)
+    matching_prices = query(f"type_price_taste_food('{type}', X, '{taste}', '{food}')")
+    for elem in matching_prices:
+        price_list.append(elem["X"])  # Insert in a list all the prices
 
-    new_price = closest_value(price_list, price_input)
-    query_string = f"title_type_price_taste_food(X, '{type_input}', {new_price}, '{taste_input}', '{food_input}')"
+    new_price = closest_value(price_list, price)  # Takes the nearest price in the list
+    query_string = f"title_type_price_taste_food(X, '{type}', {new_price}, '{taste}', '{food}')"
 
     return query(query_string)
 
 
-# Cerca il prezzo più vicino a quello dato in input dall'utente
+# Search for the closest price to the one given in user input
 def closest_value(price_list, target):
     closest_val = None
-    min_diff = float('inf')  # Inizializza la differenza minima con un valore molto grande
+    min_diff = float('inf')  # Initialize the minimum difference with a very large value
 
     for val in price_list:
         diff = abs(val - target)

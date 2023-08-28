@@ -12,22 +12,18 @@ def menu():
         user_input = int(input("\nEnter a number: "))
 
         if user_input == 1:
-            # wine section
-            wineSectionMenu()
-
-        elif user_input == 2:
             # wine recommender
             recommendMenu()
 
-        elif user_input == 3:
+        elif user_input == 2:
             # predict the quality of a wine
             qm.menu()
 
-        elif user_input == 4:
+        elif user_input == 3:
             # user manual
             userManual()
 
-        elif user_input == 5:
+        elif user_input == 4:
             # exit
             break
 
@@ -146,13 +142,17 @@ def recommendMenu():
 
         if user_input == 1:
             # recommend system
+            wineSectionMenu()
+
+        if user_input == 2:
+            # recommend system
             recommender()
 
-        elif user_input == 2:
+        elif user_input == 3:
             # info/help
             recommendHelp()
 
-        elif user_input == 3:
+        elif user_input == 4:
             # exit
             break
         else:
@@ -202,10 +202,10 @@ def find_matching_wine(preferences):
 
         elif preferences["food"] == "x":
             # taste-price
-            wine = qk.titleTastePrice(preferences["taste"], preferences["price"])
+            wine = qk.titlePriceTaste(preferences["price"], preferences["taste"])
         else:
             # taste-price-food
-            wine = qk.titleTastePriceFood(preferences["taste"], preferences["price"], preferences["food"])
+            wine = qk.titlePriceTasteFood(preferences["price"], preferences["taste"], preferences["food"])
     else:
         if preferences["price"] == "x":
             if preferences["taste"] == "x":
@@ -232,7 +232,7 @@ def find_matching_wine(preferences):
         else:
             if preferences["food"] == "x":
                 # type-taste-price
-                wine = qk.titleTypeTastePrice(preferences["type"], preferences["taste"], preferences["price"])
+                wine = qk.titleTypePriceTaste(preferences["type"], preferences["price"], preferences["taste"])
             else:
                 wine = None
                 print("Error while calculating your preferences.")
@@ -256,6 +256,7 @@ def print_matching_wine(wine):
             if w["Title"].lower() == wine_list[r].lower():
                 print("\nTitle:", wine_list[r])
                 print("Type:", w["Type"])
+                print("Region:", w["Region"])
                 print("Price:", w["Price"], "€")
                 print("Taste:", w["Taste"])
                 print("Food:", w["Food"])
@@ -267,11 +268,10 @@ def print_matching_wine(wine):
 
 def mainMenu():
     print("\n Welcome!\n"
-          + "\n 1 -- Wine catalogue"
-          + "\n 2 -- Recommend me"
-          + "\n 3 -- Quality prediction"
-          + "\n 4 -- User Manual"
-          + "\n 5 -- Exit")
+          + "\n 1 -- Recommend me"
+          + "\n 2 -- Quality prediction"
+          + "\n 3 -- User Manual"
+          + "\n 4 -- Exit")
 
 
 def wineSectionTextMenu():
@@ -282,14 +282,15 @@ def wineSectionTextMenu():
 
 
 def recommendTextMenu():
-    print("\n # --- Wine recommender --- #\n"
-          + "\n 1 -- Recommend me"
-          + "\n 2 -- Information/help"
-          + "\n 3 -- Return to main menu")
+    print("\n # --- Wine recommendation --- #\n"
+          + "\n 1 -- Wine Catalogue"
+          + "\n 2 -- Recommend me"
+          + "\n 3 -- Information/help"
+          + "\n 4 -- Return to main menu")
 
 
 def recommendHelp():
-    print("\n # ------ Reccomender manual ------ #"
+    print("\n # ------ Reccommendation manual ------ #"
           + "\n\n [Type]"
           + "\n The wine's color."
           + "\n It depends on which type of grape is used to make the wine."
