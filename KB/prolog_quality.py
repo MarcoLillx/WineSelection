@@ -230,6 +230,10 @@ def createDict(values):
 # funzione che trasforma in notazione "esempio(C,O)" tutti i fatti presenti
 def transform(featureDict):
     fixAcid, volAcid, citAcid, rSugar, chlorides, freeSulf, totSulf, sulphates, alcohol = classifyValues(featureDict)
-    exampleFact = "esempio(" + featureDict["quality"] + ", [fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid + ", rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = " + freeSulf + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates + ", alcohol_class = " + alcohol + ", color_class = " + featureDict["color"] + "])"
+    exampleFact = ("esempio(" + featureDict["quality"] + ", [fixAcid_class = " + fixAcid + ", volAcid_class = "
+                   + volAcid + ", citAcid_class = " + citAcid + ", rSugar_class = " + rSugar + ", chlorides_class = "
+                   + chlorides + ", freeSulf_class = " + freeSulf + ", totSulf_class = " + totSulf
+                   + ", sulphates_class = " + sulphates + ", alcohol_class = " + alcohol + ", color_class = "
+                   + featureDict["color"] + "])")
 
     prolog.assertz(exampleFact)

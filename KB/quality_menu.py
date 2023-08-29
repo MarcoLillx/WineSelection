@@ -44,8 +44,10 @@ def addMenu():
 
     wine = input("\nEnter the name of the wine to add to the Knowledge Base [without spaces]:\n> ").lower()
 
-    fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color = inputExample()
-    valueList.extend([wine, fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color, ""])
+    (fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide,
+     sulphates, alcohol, color) = inputExample()
+    valueList.extend([wine, fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
+                      free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color, ""])
 
     featureDict = pq.createDict(valueList)
 
@@ -57,7 +59,10 @@ def addMenu():
 
     elif response == "n":
         fixAcid, volAcid, citAcid, rSugar, chlorides, freeSulf, totSulf, sulphates, alcohol = pq.classifyValues(featureDict)
-        example = "[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid + ",  rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = " + freeSulf + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates + ", alcohol_class = " + alcohol + ", color_class = " + color + "]"
+        example = ("[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid
+                   + ",  rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = "
+                   + freeSulf + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates
+                   + ", alcohol_class = " + alcohol + ", color_class = " + color + "]")
         quality = pq.classifyExample(example)
     else:
         print("Wrong command!")
@@ -84,7 +89,10 @@ def classificationMenu():
 
     fixAcid, volAcid, citAcid, rSugar, chlorides, freeSulf, totSulf, sulphates, alcohol = pq.classifyValues(user_inputs)
 
-    example = "[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid + ", rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = " + freeSulf + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates + ", alcohol_class = " + alcohol + ", color_class = " + user_inputs["color"] + "]"
+    example = ("[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid
+               + ", rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = " + freeSulf
+               + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates + ", alcohol_class = " + alcohol
+               + ", color_class = " + user_inputs["color"] + "]")
     pq.classifyExample(example)
 
 
