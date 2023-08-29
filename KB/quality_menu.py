@@ -59,11 +59,14 @@ def addMenu():
 
     elif response == "n":
         fixAcid, volAcid, citAcid, rSugar, chlorides, freeSulf, totSulf, sulphates, alcohol = pq.classifyValues(featureDict)
+
         example = ("[fixAcid_class = " + fixAcid + ", volAcid_class = " + volAcid + ", citAcid_class = " + citAcid
                    + ",  rSugar_class = " + rSugar + ", chlorides_class = " + chlorides + ", freeSulf_class = "
                    + freeSulf + ", totSulf_class = " + totSulf + ", sulphates_class = " + sulphates
                    + ", alcohol_class = " + alcohol + ", color_class = " + color + "]")
+
         quality = pq.classifyExample(example)
+
     else:
         print("Wrong command!")
         return
@@ -173,3 +176,4 @@ def qualityHelp():
           + "\n Wine experts graded the wine quality between 0 (very bad) and 10 (very excellent)"
           + "\n Wines with a quality score of 5 or less are considered bad quality."
           + "\n Wines with a quality score of 6 or more are considered good quality.")
+
