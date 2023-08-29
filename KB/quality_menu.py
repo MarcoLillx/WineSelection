@@ -99,7 +99,8 @@ def classificationMenu():
 def classInput():
     values = []
 
-    fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color = inputExample()
+    (fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide,
+     sulphates, alcohol, color) = inputExample()
 
     values.extend(
         ["", fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
@@ -121,7 +122,8 @@ def inputExample():
     alcohol = input("Enter alcohol [> 0]: ", )
     color = input("Enter color [red/white]: ")
 
-    return fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, fs_dioxide, ts_dioxide, sulphates, alcohol, color
+    return (fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, fs_dioxide, ts_dioxide, sulphates,
+            alcohol, color)
 
 
 def qualityHelp():
