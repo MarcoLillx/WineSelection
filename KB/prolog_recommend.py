@@ -47,7 +47,7 @@ def titlePrice(price):
         price_list.append(elem["X"])  # Insert in a list all the prices
 
     new_price = closest_value(price_list, price)  # Takes the nearest price in the list
-    query_string = f"title_price(X,{new_price})"
+    query_string = f"title_price(X, {new_price})"
 
     return query(query_string)
 
@@ -80,7 +80,7 @@ def titleTypePrice(type, price):
         price_list.append(elem["X"])  # Insert in a list all the prices
 
     new_price = closest_value(price_list, price)  # Takes the nearest price in the list
-    query_string = f"title_type_price(X, '{type}',{new_price})"
+    query_string = f"title_type_price(X, '{type}', {new_price})"
 
     return query(query_string)
 
@@ -106,7 +106,7 @@ def titleTypePriceTaste(type, price, taste):
         price_list.append(elem["X"])  # Insert in a list all the prices
 
     new_price = closest_value(price_list, price)  # Takes the nearest price in the list
-    query_string = f"title_type_price_taste(X, '{type}', {new_price}, '{taste}',)"
+    query_string = f"title_type_price_taste(X, '{type}', {new_price}, '{taste}')"
 
     return query(query_string)
 
