@@ -1,3 +1,5 @@
+:- dynamic(wine/7).
+
 % Fatti riguardanti i vini
 wine(1, 'Bellavista Vittorio Moretti 2013', sparkling, 'Lombardy', 89, crisp, 'fish').
 wine(2, 'Baglio di Pianetto 2007 Ficiligno White', white, 'Sicily', 19, sweet, 'fish').

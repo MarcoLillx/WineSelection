@@ -5,7 +5,6 @@ import quality_menu as qm
 
 def menu():
     while True:
-        # system('cls')
 
         mainMenu()
 
@@ -47,7 +46,7 @@ def wineSectionMenu():
 
         elif user_input == 3:
             # exit
-            break
+            recommendMenu()
 
         else:
             print("\n [!] I don't know this command!")
@@ -144,17 +143,22 @@ def recommendMenu():
             # recommend system
             wineSectionMenu()
 
-        if user_input == 2:
+        elif user_input == 2:
+            # add wine
+            addRecommendWine()
+
+        elif user_input == 3:
             # recommend system
             recommender()
 
-        elif user_input == 3:
+        elif user_input == 4:
             # info/help
             recommendHelp()
 
-        elif user_input == 4:
+        elif user_input == 5:
             # exit
             break
+
         else:
             print("\n [!] I don't know this command!")
 
@@ -163,23 +167,21 @@ def recommender():
     # dictionary for user preferences
     preferences = {
         "type": input("\n Enter a type [red/white/rose/sparkling] or 'x' for no preference: "),
-        "price": input("\n Enter a price or 'x' for no preference: "),
-        "taste": input("\n Enter a taste [dry/sweet/crisp] or 'x' for no preference: "),
-        "food": input("\n Enter a food [red meat/white meat/fish/dessert] or 'x' for no preference: ")
+        "price": input("Enter a price or 'x' for no preference: "),
+        "taste": input("Enter a taste [dry/sweet/crisp] or 'x' for no preference: "),
+        "food": input("Enter a food [red meat/white meat/fish/dessert] or 'x' for no preference: ")
     }
 
     if all(value != "x" for value in preferences.values()):
         wine = pr.allSearch(preferences["type"], preferences["price"], preferences["taste"], preferences["food"])
         print_matching_wine(wine)
     elif all(value == "x" for value in preferences.values()):
-        print("You have no preferences, all wines are good for you!")
+        print("\nYou have no preferences, all wines are good for you!")
     else:
         wine = find_matching_wine(preferences)
         print_matching_wine(wine)
 
 
-# if-else statement troppo dispendioso, utilizzare invece un dizionario
-# (oppure scrivere le 4^2 combinazioni concatenandoli con l'operatore and)
 def find_matching_wine(preferences):
     if preferences["type"] == "x":
         if preferences["price"] == "x":
@@ -266,9 +268,48 @@ def print_matching_wine(wine):
         print("No wine matches your preferences.")
 
 
+def addRecommendWine():
+    wines = pr.getWines()
+    flag = True
+
+    print("\nAdd your wine in the dataset!")
+
+    id = maxID(wines) + 1
+    title = input("\nEnter wine's name: ")
+    type = input("Enter wine's type: ")
+    region = input("Enter wine's region: ")
+
+    while flag:
+        price = input("Enter wine's price: ")
+        if price.isdigit():
+            flag = False
+        else:
+            print("\n[!] Please enter a number.")
+
+    taste = input("Enter wine's taste: ")
+    food = input("Enter wine's best food to pair with: ")
+
+    for w in wines:
+        if w["Title"] == title:
+            print("\n[!] This wine already exists in the dataset!")
+            return
+
+    add_query = f"wine({id}, '{title}', {type}, '{region}', {price}, {taste}, '{food}')"
+    pr.addAssert(add_query)
+    print("\nWine added!")
+
+
+def maxID(wine_list):
+    max_id = 0
+    for wine in wine_list:
+        if wine['Id'] > max_id:
+            max_id = wine['Id']
+    return max_id
+
+
 def mainMenu():
     print("\n Welcome!\n"
-          + "\n 1 -- Recommend me"
+          + "\n 1 -- Wine recommender"
           + "\n 2 -- Quality prediction"
           + "\n 3 -- User Manual"
           + "\n 4 -- Exit")
@@ -284,13 +325,14 @@ def wineSectionTextMenu():
 def recommendTextMenu():
     print("\n # --- Wine recommender --- #\n"
           + "\n 1 -- Wine Catalogue"
-          + "\n 2 -- Recommend me"
-          + "\n 3 -- Information/help"
-          + "\n 4 -- Return to main menu")
+          + "\n 2 -- Add wine"
+          + "\n 3 -- Recommend me"
+          + "\n 4 -- Information/help"
+          + "\n 5 -- Return to main menu")
 
 
 def recommendHelp():
-    print("\n # ------ Reccommender manual ------ #"
+    print("\n # ------ Recommender manual ------ #"
           + "\n\n [Type]"
           + "\n The wine's color."
           + "\n It depends on which type of grape is used to make the wine."
@@ -302,8 +344,6 @@ def recommendHelp():
 
 def userManual():
     print("\n # ------ User Manual ------ #"
-          + "\n\n [Wine catalogue]"
-          + "\n     In this section you can read and search between 30 Italian wines."
           + "\n\n [Recommend me]"
           + "\n     In this section you'll be able to find the wine that better fits you're requests!"
           + "\n\n [Quality prediction]"
