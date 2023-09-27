@@ -70,7 +70,7 @@ def classify(example):
         result = elem["Classe"]
 
     if result == "":
-        return "undefined: cannot predict the quality of this wine's compositions"
+        return "undefined: cannot predict the quality of this wine composition"
 
     return result
 

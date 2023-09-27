@@ -28,7 +28,7 @@ def menu():
             qualityHelp()
 
         elif user_input == '5':
-            return
+            break
 
         else:
             print("\n [!] I don't know this command!")
@@ -71,12 +71,14 @@ def addMenu():
         print("Wrong command!")
         return
 
-    print("Quality: " + quality)
-    valueList.pop()
-    valueList.append(quality)
-    pq.addWine(wine, valueList)
+    if quality == 'bad' or quality == 'good':
+        valueList.pop()
+        valueList.append(quality)
+        pq.addWine(wine, valueList)
 
-    print("\nWine added!")
+        print("\nWine added!")
+    else:
+        print("Cannot add this wine composition.")
 
 
 def classifyInput(quality):

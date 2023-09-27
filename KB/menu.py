@@ -8,21 +8,21 @@ def menu():
 
         mainMenu()
 
-        user_input = int(input("\nEnter a number: "))
+        user_input = input("\nEnter a number: ")
 
-        if user_input == 1:
+        if user_input == '1':
             # wine recommender
             recommendMenu()
 
-        elif user_input == 2:
+        elif user_input == '2':
             # predict the quality of a wine
             qm.menu()
 
-        elif user_input == 3:
+        elif user_input == '3':
             # user manual
             userManual()
 
-        elif user_input == 4:
+        elif user_input == '4':
             # exit
             break
 
@@ -46,7 +46,7 @@ def wineSectionMenu():
 
         elif user_input == 3:
             # exit
-            recommendMenu()
+            break
 
         else:
             print("\n [!] I don't know this command!")
@@ -137,25 +137,25 @@ def recommendMenu():
     while True:
         recommendTextMenu()
 
-        user_input = int(input("\nEnter a number: "))
+        user_input = input("\nEnter a number: ")
 
-        if user_input == 1:
+        if user_input == '1':
             # recommend system
             wineSectionMenu()
 
-        elif user_input == 2:
+        elif user_input == '2':
             # add wine
             addRecommendWine()
 
-        elif user_input == 3:
+        elif user_input == '3':
             # recommend system
             recommender()
 
-        elif user_input == 4:
+        elif user_input == '4':
             # info/help
             recommendHelp()
 
-        elif user_input == 5:
+        elif user_input == '5':
             # exit
             break
 
@@ -331,8 +331,26 @@ def recommendTextMenu():
           + "\n 5 -- Return to main menu")
 
 
+def userManual():
+    print("\n # ------ User Manual ------ #"
+          + "\n\n [Recommend me]"
+          + "\n     In this section, you'll be able to find the wine that better fits you're requests!"
+          + "\n\n [Quality prediction]"
+          + "\n     In this section, you can predict what's the quality of a wine"
+          + "\n     The calculation is performed based on a dataset of 41 wines!")
+
+
 def recommendHelp():
     print("\n # ------ Recommender manual ------ #"
+          + "\n\n -- Sections Help --"
+          + "\n\n [Wine Catalogue]"
+          + "\n In this section, you can browse through an extensive catalog of wines and search for your favorite by "
+          + "\n comparing color, prices, flavor, and associated food."
+          + "\n\n [Add Wine]"
+          + "\n In this section, you can add a wine in the dataset."
+          + "\n\n [Recommend me]"
+          + "\n In this section, you can find the wine that suits your preferences."
+          + "\n\n -- Terminology --"
           + "\n\n [Type]"
           + "\n The wine's color."
           + "\n It depends on which type of grape is used to make the wine."
@@ -340,12 +358,3 @@ def recommendHelp():
           + "\n Refers to the wine's flavor in the mouth."
           + "\n\n [Food]"
           + "\n It's the food you want to find a wine to pair with.")
-
-
-def userManual():
-    print("\n # ------ User Manual ------ #"
-          + "\n\n [Recommend me]"
-          + "\n     In this section you'll be able to find the wine that better fits you're requests!"
-          + "\n\n [Quality prediction]"
-          + "\n     In this section you can predict what's the quality of a wine"
-          + "\n     The calculation is performed based on a dataset of 40 wines!")
