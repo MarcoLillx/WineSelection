@@ -6,7 +6,7 @@ prolog.consult("wine_quality.pl")
 
 # funzione per richiamare la query prolog che restituisce tutti i vini
 def getWines():
-    myQuery = "prop(P, wineid, _)."
+    myQuery = "prop(P, color, _)."
     wines = list(prolog.query(myQuery))
     return wines
 
@@ -30,13 +30,13 @@ def printFeatures(wine):
         for elem in result:
             values.append(str(elem["V"]))
 
-    featuresDict = {"Fixed Acidity": values[1], "Volatile Acidity": values[2],
-                    "Citric Acidity": values[3],
-                    "Residual Sugar": values[4],
-                    "Chlorides": values[5], "Free Sulfur Dioxide": values[6],
-                    "Total Sulfur Dioxide": values[7], "Sulphates": values[8], "Alcohol": values[9],
-                    "Color": values[10],
-                    "Quality": values[11]}
+    featuresDict = {"Fixed Acidity": values[0], "Volatile Acidity": values[1],
+                    "Citric Acidity": values[2],
+                    "Residual Sugar": values[3],
+                    "Chlorides": values[4], "Free Sulfur Dioxide": values[5],
+                    "Total Sulfur Dioxide": values[6], "Sulphates": values[7], "Alcohol": values[8],
+                    "Color": values[9],
+                    "Quality": values[10]}
 
     return str(featuresDict)
 
@@ -167,7 +167,7 @@ def getAlcoholClass(alcohol):
 
 # funzione che restituisce una lista di tutte le feature
 def getFeatures():
-    features = ["wineid", "fixed_acidity", "volatile_acidity", "citric_acid", "residual_sugar", "chlorides",
+    features = ["fixed_acidity", "volatile_acidity", "citric_acid", "residual_sugar", "chlorides",
                 "free_sulfur_dioxide", "total_sulfur_dioxide", "sulphates",
                 "alcohol", "color", "quality"]
 
@@ -220,9 +220,9 @@ def listProp(wineList):
 
 # creo dizionario per accedere più semplicemente ai dati e rendere più leggibile il programma
 def createDict(values):
-    featureDict = {"wineName": values[0], "fixAcid": values[1], "volAcid": values[2], "citAcid": values[3],
-                   "rSugar": values[4], "chlorides": values[5], "freeSulf": values[6], "totSulf": values[7],
-                   "sulphates": values[8], "alcohol": values[9], "color": values[10], "quality": values[11]}
+    featureDict = {"fixAcid": values[0], "volAcid": values[1], "citAcid": values[2],
+                   "rSugar": values[3], "chlorides": values[4], "freeSulf": values[5], "totSulf": values[6],
+                   "sulphates": values[7], "alcohol": values[8], "color": values[9], "quality": values[10]}
 
     return featureDict
 

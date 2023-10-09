@@ -46,7 +46,7 @@ def addMenu():
 
     (fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide,
      sulphates, alcohol, color) = inputExample()
-    valueList.extend([wine, fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
+    valueList.extend([fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
                       free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color, ""])
 
     featureDict = pq.createDict(valueList)
@@ -108,7 +108,7 @@ def classInput():
      sulphates, alcohol, color) = inputExample()
 
     values.extend(
-        ["", fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
+        [fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
          free_sulfur_dioxide, total_sulfur_dioxide, sulphates, alcohol, color, ""])
     user_inputs = pq.createDict(values)
 
