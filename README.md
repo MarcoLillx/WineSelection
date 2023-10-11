@@ -12,10 +12,9 @@
 ## Istruzioni per l'installazione
 
 Per installare l'ambiente SWI Prolog (versione consigliata: `8.4.2`) clicca [qui](https://www.swi-prolog.org/download/stable?show=all) oppure digita il seguente comando:
-- `python -m pip install git+https://github.com/yuce/pyswip@master#egg=pyswip`.
-
+  `python -m pip install git+https://github.com/yuce/pyswip@master#egg=pyswip`.
 Infine, per installare le dipendenze, bisogna posizionarsi all' interno della directory principale e digitare il seguente comando:
-- `pip install -r requirements.txt`
+  `pip install -r requirements.txt`
 Per eseguire il sistema basato su conoscenza digitare `python main.py`.
 
 ## Introduzione
@@ -32,7 +31,7 @@ Il dataset relativo al sistema di predizione della qualità di un vino contiene 
 - **Volatile acidity**
   - Questo tipo di acido può essere percepito attraverso l'olfatto, conferisce al vino un sapore acidulo
 - **Citric acid**
- - Può aggiungere “freschezza” e sapore ai vini
+  - Può aggiungere “freschezza” e sapore ai vini
 - **Residual sugar**
   - Lo zucchero dell'uva che non è stato fermentato in alcool
 - **Chlorides**
