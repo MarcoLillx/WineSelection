@@ -12,8 +12,11 @@
 ## Istruzioni per l'installazione
 
 Per installare l'ambiente SWI Prolog (versione consigliata: `8.4.2`) clicca [qui](https://www.swi-prolog.org/download/stable?show=all) oppure digita il seguente comando:
-  `python -m pip install git+https://github.com/yuce/pyswip@master#egg=pyswip`.
+
+  `python -m pip install git+https://github.com/yuce/pyswip@master#egg=pyswip`
+  
 Infine, per installare le dipendenze, bisogna posizionarsi all' interno della directory principale e digitare il seguente comando:
+
   `pip install -r requirements.txt`.
   
 Per eseguire il sistema basato su conoscenza digitare `python main.py`.
