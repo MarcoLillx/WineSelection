@@ -1,7 +1,9 @@
 # WineSelection
 > Progetto di Ingegneria della Conoscenza A.A 2022/2023 basato su un sistema di predizione della qualità di un vino e consigliatore di vini, con interfaccia CLI realizzata in Python.
 
+<p align="center">
 ![wines](https://github.com/MarcoLillx/WineSelection/blob/main/Img/wines.jpeg)
+</p>
 
 ### Gruppo di lavoro
 - [Michele Fraccalvieri](https://github.com/Citrone16), 724204
@@ -56,7 +58,7 @@ In cui:
 -	**Id** è l’identificatore univoco del vino
 -	**Title** è il nome completo del vino (compresa l’annata)
 -	**Type** è il colore del vino
--	**Province** è la provincia di provenienza del vino
+-	**Province** è la regione di provenienza del vino
 -	**Price** è il prezzo del vino
 -	**Taste** è il sapore del vino
 -	**Food** è il cibo con cui il vino si abbina meglio
