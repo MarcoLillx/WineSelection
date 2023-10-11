@@ -1,9 +1,9 @@
 # WineSelection
 > Progetto di Ingegneria della Conoscenza A.A 2022/2023 basato su un sistema di predizione della qualità di un vino e consigliatore di vini, con interfaccia CLI realizzata in Python.
 
-
-![wines](https://github.com/MarcoLillx/WineSelection/blob/main/Img/wines.jpeg#center)
-
+<p align="center">
+  <img src="https://github.com/MarcoLillx/WineSelection/blob/main/Img/wines.jpeg"/>
+</p>
 
 ### Gruppo di lavoro
 - [Michele Fraccalvieri](https://github.com/Citrone16), 724204
